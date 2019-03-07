@@ -1,0 +1,113 @@
+Esquema= 	Working Directory			Staging Area			Commited
+
+-----------PRINCIPALES---------------------------------------------------------
+
+git 							:lista de comandos
+git init						:crear repositorio
+git status						:estado del repositorio
+git add [file]					:añadir un arhivo al staging area
+git add -A						:añade todos los archivos
+git add .						:añade todos los archivos
+git rm --cached	[file]			:nos devolvemos un paso (del staging area a working area)
+git reset HEAD [file]			:idem que anterior
+git rm -f [file]				:elimina el archivo por completo
+git add -n [file]				:muestra si el archivo existe en el staging area (si no esta informa, y si esta no hace nada)
+
+-----------Staging Area--->Commited-----------------------------------------------
+
+git commit						:añadir un commit
+git commit -m "[descripcion]"	:añadir un commit con una descripción
+git commit --amend				:modificar de nuevo el último commit
+
+-----------Etiquetas--------------------------------------------------------------
+
+git tag							:nos permite agregar etiquetas a nuestros cambios
+		-a						:anotar
+		-m						:mensaje
+		-l						:muestra la lista de etiquetas
+		-f						:renombrar
+		-d						:borrar
+
+-----------Historial--------------------------------------------------------------
+
+git log 						:histórico de commits
+git log --oneline				:histórico de commits en una línea
+git log --oneline --graph		:histórico de commits con una representación en ramas mediante un asterisco (en una línea)
+git log -[número]				:nos permite ver los últimos commit (-2 los dos últimos, etc)
+
+----------Visualización de cambios----------------------------------------------------------
+
+git diff [SHA1]					:lista de modificaciones aún no guardadas
+									-rojo: fueron cambios que se quitaron
+									-verde: se agregaron 
+git diff [tag] [tag]			:idem que el anterior pero con los tags
+
+----------Commited-->Staging Area----------------------------------------------------------
+
+git reset --soft [SHA-1]		:elimina un commit (indicar a partir del cual eliminar, éste no incluido)	
+
+----------Commited-->Working Directory----------------------------------------------------------
+
+git reset --mixed [SHA-1]		:elimina un commit pasándolo al WD (indicar a partir del cual eliminar, éste no incluido)
+
+----------Commited-->Elimina todo----------------------------------------------------------
+
+git reset --hard [SHA-1]		:regresa hasta el commit del [SHA 1] (Puede eliminar archivos del Staging Area --> Elimnar por completo)
+
+----------Ramas----------------------------------------------------------------------------
+
+git branch [name]				:crea una rama con el nombre dado
+git branch -l					:listar ramas
+git branch -D [name]			:eliminar
+git branch -m [old] [new]		:renombrar el nombre de una rama
+
+----------Movernos en el tiempo------------------------------------------------------------------
+
+git checkout [SHA-1/rama]		:movernos en el tiempo (al commit o a la rama especificada)
+git checkout -b [name]			:crea una rama y nos situamos dentro de ella
+
+git reset [rama] [archivo]	    :deshacer un cambio en un archivo modificado(después de add)
+
+----------Mezclar ramas----------------------------------------------------------------------------
+
+git merge [name-rama]			:une la rama que le pasamos a la rama en la que nos encontremos		
+
+----------Staging Area->Stash (Guardar cambios temporalmente)-------------------------------------------
+
+git stash						:guarda el trabajo actual de manera temporal (debe estar en el Staging Area)
+git stash list					:lista los stash
+git stash drop [id_stash]		:elimina un stash
+git stash apply					:pasa el stash último al Staging Area
+				[id_stash]		:pasa el stash especificado al Staging Area
+
+----------Mover un commit------------------------------------------------------------------
+
+git cherry-pick [SHA-1]			:nos situamos en la rama que desemos y movemos el commit con el hash indicado
+
+----------Clonar-----------------------------------------------------------------------
+
+git clone [URL]					:para clonar un repositorio (bajarlo de GitHub)
+
+----------Crear llave y añadir a GitHub-----------------------------------------------------------------
+
+ssh-keygen -t rsa -b 4096 -C "email@email.com"
+cat ~/.ssh/id_rsa.pub
+GitHub->Setting->SSH and GPG keys->New SSH key
+
+----------Conectar con repositorio externo------------------------------------------------------------------
+
+git remote add [origin] [URL] 	:conecta un repositorio con nuestro equipo local (origin es el nombre de la conexión)
+git remote -v 					:lista las conexiones existentes
+git remote remove [origin] 		:elimina una conexión con algún repositorio
+
+----------Repositorio Externo->Repositorio Local-----------------------------------------------------------------
+
+git fetch origin master			:origin= remoto | master= rama del remoto, nos bajamos el contenido y crea una rama origin/master
+git merge origin/master			:unimos la rama recién creada a nuestra rama master local. Si falla->git merge origin/master --allow-unrelated-histories
+
+git pull origin master			:bajamos del repositorio externo directamente
+
+----------Repositorio Local->Repositorio Externo-----------------------------------------------------------------
+
+git push origin [rama]			:enviamos al repositorio externo la rama que le pasemos
+git push origin master --tags	:enviar los tags 
